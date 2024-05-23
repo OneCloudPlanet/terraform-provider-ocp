@@ -8,6 +8,38 @@ description: |-
 
 # ocp Provider
 
+Use the Onecloud provider to manage [Kubernetes Clusters](https://docs.onecloudplanet.com/docs/).
+
+To manage resources available via OpenStack API, use [OpenStack Terraform provider](https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest).
+
+## Example Usage
+
+```hcl
+terraform {
+  required_providers {
+    ocp = {
+      source = "OnePointCollab/ocp"
+      version = "0.1.1"
+    }
+  }
+}
+
+# Create a Cloud Platform project
+resource "ocp_cluster" "new-cluster" {
+  # ...
+}
+```
+
+## Authentication
+
+```hcl
+# Configure the Onecloud provider
+
+provider "ocp" {
+  api_token   = "***********"
+  region      = "ua"
+}
+```
 
 
 
@@ -17,8 +49,11 @@ description: |-
 
 ### Required
 
-- `api_token` (String) Service user password
+* `api_token` (String) Open-Api token for api server Onecloud. Generate in account settings for our region. For import, use the value in the `OCP_API_TOKEN` environment variable
 
 ### Optional
 
-- `region` (String) VPC region to import resources associated with the specific region. 'ua' is used by default
+* `region` (String) Your selected region. `ua` is used by default. For import, use the value in the `OCP_REGION` environment variable  
+  Available regions:  
+  + `ua`
+  + `pl`
