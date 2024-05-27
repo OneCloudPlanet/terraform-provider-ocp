@@ -15,11 +15,11 @@ Create and manage node pools for kubernetes clusters.
 ```hcl
 resource "ocp_nodepool" "new_nodepool" {
   name = "nodepool-name"
-  flavor_id = ocp_flavor.list_flavors.flavors[0].id
+  flavor_id = data.ocp_flavor.list_flavors.flavors[0].id
   node_count = 3
   autoscale = true
   max_count = 5
-  cluster = ocp_cluster.new_cluster.id
+  cluster = data.ocp_cluster.new_cluster.id
 }
 ```
 

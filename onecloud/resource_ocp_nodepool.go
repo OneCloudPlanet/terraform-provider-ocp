@@ -174,6 +174,9 @@ func resourceOCPNodePoolCreate(ctx context.Context, d *schema.ResourceData, meta
 	}
 	nodePoolData := GetNodePoolCreateOptions(d)
 	res, err := client.CreateNodePool(ctx, nodePoolData)
+	if err != nil {
+		return diag.FromErr(err)
+	}
 	d.SetId(res["id"].(string))
 
 	return nil

@@ -15,9 +15,7 @@ List available Flavors.
 ```hcl
 data "ocp_flavor" "list_flavors" {
   filter {
-    vcpus     = 1
-    memory_gb = 1
-    root_gb   = 10
+    memory_gb = 8
   }
 }
 ```

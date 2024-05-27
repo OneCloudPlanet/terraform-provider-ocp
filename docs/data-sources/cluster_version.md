@@ -15,7 +15,7 @@ List available cluster versions and images for Kubernetes Cluster.
 ```hcl
 data "ocp_cluster_version" "list_versions" {
   filter {
-    image_name = "Ubuntu 22.04"
+    version = "v1.27.4"
   }
 }
 ```
