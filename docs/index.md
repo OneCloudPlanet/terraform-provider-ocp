@@ -19,7 +19,7 @@ terraform {
   required_providers {
     ocp = {
       source = "OnePointCollab/ocp"
-      version = "0.1.1"
+      version = "0.1.0"
     }
   }
 }
@@ -36,7 +36,7 @@ resource "ocp_cluster" "new-cluster" {
 # Configure the Onecloud provider
 
 provider "ocp" {
-  api_token   = "***********"
+  api_token   = "49e9a4cff4ce46374f408bc88e410b745c715bfb"
   region      = "ua"
 }
 ```
