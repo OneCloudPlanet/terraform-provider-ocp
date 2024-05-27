@@ -1,17 +1,3 @@
-terraform {
-  required_providers {
-    ocp = {
-      source = "OnePointCollab/ocp"
-      version = "0.1.3"
-    }
-  }
-}
-
-provider "ocp" {
-  api_token = "49e9a4cff4ce46374f408bc88e410b745c715bfb"
-  region = "ua"
-}
-
 data "ocp_flavor" "master_flavors" {
   filter {
     memory_gb = 4
@@ -74,7 +60,7 @@ resource "ocp_cluster" "new_cluster" {
 }
 
 resource "ocp_nodepool" "new_nodepool" {
-  name = "nodepool-name"
+  name = "second-nodepool"
   flavor_id = data.ocp_flavor.node_flavors.flavors[0].id
   node_count = 2
   autoscale = false
