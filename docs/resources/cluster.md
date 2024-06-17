@@ -30,9 +30,12 @@ resource "ocp_cluster" "new_cluster" {
     max_count  = 5
   }
   addons {
-    dashboard = true
-    metrics   = true
-    nginx     = true
+    name = data.ocp_cluster_addons.list_addons.addons[0].name
+    version = data.ocp_cluster_addons.list_addons.addons[0].releases[0].version
+  }
+  addons {
+    name = data.ocp_cluster_addons.list_addons.addons[1].name
+    version = data.ocp_cluster_addons.list_addons.addons[1].releases[0].version
   }
 }
 ```
@@ -53,10 +56,9 @@ resource "ocp_cluster" "new_cluster" {
     + `node_count` - (Number) Number of nodes in node pool. Changing this upgrades the node pool.
     + `autoscale` - (Boolean) Auto scale number of nodes in node pool. Changing this upgrades the node pool.
     + `max_count` - (Optional) (Number) Max number of nodes if enabled autoscale.
-- `addons` - Addons Object
-    + `dashboard` - (Optional) (Boolean) Kubernetes Dashboard
-    + `metrics` - (Optional) (Boolean) Kubernetes Metrics
-    + `nginx` - (Optional) (Boolean) Ingress Nginx
+- `addons` - (Optional) List of Addons Object
+    + `name` - (String) Addon name
+    + `version` - (String) Addon version
 
 ## Attributes Reference
 

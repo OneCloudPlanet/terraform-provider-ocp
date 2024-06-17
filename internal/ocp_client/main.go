@@ -11,7 +11,7 @@ const (
 	PLRegion = "pl"
 )
 
-var regions map[string]string = map[string]string{
+var regions = map[string]string{
 	UARegion: "core.ocplanet.cloud",
 	PLRegion: "core-pl.ocplanet.cloud",
 }

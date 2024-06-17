@@ -16,7 +16,7 @@ type ClusterCreateOptions struct {
 	Networking     string                  `json:"networking"`
 	RestrictionApi bool                    `json:"restriction_api"`
 	RestrictionIps []string                `json:"restriction_ips"`
-	Addons         Addons                  `json:"addons"`
+	Addons         []Addon                 `json:"addons"`
 }
 
 type NodePoolCreateOptions struct {
@@ -42,10 +42,9 @@ type Taint struct {
 	Effect string `json:"effect"`
 }
 
-type Addons struct {
-	Dashboard bool `json:"dashboard"`
-	Metrics   bool `json:"metrics"`
-	Nginx     bool `json:"nginx"`
+type Addon struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
 }
 
 func (c *ClusterCreateOptions) toJson() ([]byte, diag.Diagnostics) {
@@ -68,7 +67,7 @@ func GetClusterCreateOptions(d *schema.ResourceData) *ClusterCreateOptions {
 		RestrictionApi: d.Get("restriction_api").(bool),
 		RestrictionIps: getListOfString(d.Get("restriction_ips").([]interface{})),
 		NodePool:       getNodePool(d.Get("node_pool").([]interface{})),
-		Addons:         getAddons(d),
+		Addons:         getAddons(d.Get("addons").([]interface{})),
 	}
 }
 
@@ -86,13 +85,16 @@ func GetNodePoolCreateOptions(d *schema.ResourceData) *NodePoolCreateOptions {
 	}
 }
 
-func getAddons(d *schema.ResourceData) Addons {
-	addonData := d.Get("addons").(*schema.Set).List()[0].(map[string]interface{})
-	return Addons{
-		Dashboard: addonData["dashboard"].(bool),
-		Metrics:   addonData["metrics"].(bool),
-		Nginx:     addonData["nginx"].(bool),
+func getAddons(data []interface{}) []Addon {
+	addons := make([]Addon, len(data))
+	for i, item := range data {
+		addonMap := item.(map[string]interface{})
+		addons[i] = Addon{
+			Name:    addonMap["name"].(string),
+			Version: addonMap["version"].(string),
+		}
 	}
+	return addons
 }
 
 func getLabels(data []interface{}) []Label {

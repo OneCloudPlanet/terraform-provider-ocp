@@ -68,28 +68,19 @@ func resourceCluster() *schema.Resource {
 				},
 			},
 			"addons": {
-				Type:     schema.TypeSet,
-				Required: true,
+				Type:     schema.TypeList,
+				Optional: true,
 				ForceNew: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"dashboard": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							Default:  false,
+						"name": {
+							Type:     schema.TypeString,
+							Required: true,
 							ForceNew: true,
 						},
-						"metrics": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							Default:  false,
-							ForceNew: true,
-						},
-						"nginx": {
-							Type:     schema.TypeBool,
-							Optional: true,
-							Default:  false,
+						"version": {
+							Type:     schema.TypeString,
+							Required: true,
 							ForceNew: true,
 						},
 					},

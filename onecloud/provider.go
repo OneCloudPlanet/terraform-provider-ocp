@@ -26,6 +26,7 @@ func Provider() *schema.Provider {
 			"ocp_flavor":             dataSourceFlavor(),
 			"ocp_cluster_version":    dataSourceClusterVersion(),
 			"ocp_cluster_networking": dataSourceClusterNetworking(),
+			"ocp_cluster_addons":     dataSourceClusterAddons(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ocp_cluster":  resourceCluster(),
