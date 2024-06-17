@@ -23,6 +23,11 @@ data "ocp_cluster_networking" "list_networking" {
   }
 }
 
+data "ocp_cluster_addons" "list_addons" {
+  filter {
+  }
+}
+
 output "ms_flavors" {
   value = data.ocp_flavor.master_flavors.flavors[0].id
 }
@@ -34,6 +39,9 @@ output "networking" {
 }
 output "versions" {
   value = data.ocp_cluster_version.list_versions.versions[0].images[0].image_name
+}
+output "addons" {
+  value = data.ocp_cluster_addons.list_addons.addons[1]
 }
 
 resource "ocp_cluster" "new_cluster" {
@@ -53,9 +61,12 @@ resource "ocp_cluster" "new_cluster" {
     max_count  = 5
   }
   addons {
-    dashboard = true
-    metrics   = true
-    nginx     = true
+    name = data.ocp_cluster_addons.list_addons.addons[0].name
+    version = data.ocp_cluster_addons.list_addons.addons[0].releases[0].version
+  }
+  addons {
+    name = data.ocp_cluster_addons.list_addons.addons[1].name
+    version = data.ocp_cluster_addons.list_addons.addons[1].releases[0].version
   }
 }
 
